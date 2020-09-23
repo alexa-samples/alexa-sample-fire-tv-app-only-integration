@@ -1,0 +1,3 @@
+include ':VSKApplicationAgentClientLibrary'
+include ':app'
+rootProject.name='VSK Agent Reference'

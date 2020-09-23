@@ -1,0 +1,10 @@
+{
+  "type": "AlexaInterface",
+  "interface": "Alexa.KeypadController",
+  "version": "3",
+  "keys": [
+    "INFO", "MORE", "SELECT",
+    "UP", "DOWN", "LEFT", "RIGHT",
+    "PAGE_UP", "PAGE_DOWN", "PAGE_LEFT", "PAGE_RIGHT"
+  ]
+}

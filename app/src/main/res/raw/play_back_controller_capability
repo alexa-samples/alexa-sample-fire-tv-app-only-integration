@@ -1,0 +1,16 @@
+{
+  "type": "AlexaInterface",
+  "interface": "Alexa.PlaybackController",
+  "version": "3",
+  "supportedOperations": [
+    "Pause",
+    "Play",
+    "Stop",
+    "Resume",
+    "Next",
+    "Previous",
+    "FastForward",
+    "Rewind",
+    "StartOver"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "type": "AlexaInterface",
+  "interface": "Alexa.RemoteVideoPlayer",
+  "version": "3.1",
+  "configurations": {
+    "operations": [
+      "SearchAndPlay",
+      "SearchAndDisplayResults"
+    ],
+    "catalogs": [
+      {
+        "type": "VIDEO_INGESTION_IDENTIFIER",
+        "sourceId": "ontv"
+      }]
+  }
+}

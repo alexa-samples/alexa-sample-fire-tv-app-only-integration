@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.vskfiretv.company">
+
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="true" />
+
+    <!-- This permission allows your app to integrate with VSK Agent -->
+    <uses-permission android:name="com.amazon.alexa.vsk_app_agent_api.permission.BIND_SERVICE_PERMISSION" />
+
+    <!-- This permission allows your app to access video content from the internet-->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name=".VSKReferenceApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <!-- You can declare the app's static capabilities in this way-->
+        <meta-data android:name="com.amazon.alexa.vsk_app_agent_api.capabilities" android:resource="@raw/static_capabilities" />
+
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTop"
+            android:banner="@drawable/app_icon_your_company"
+            android:icon="@drawable/app_icon_your_company"
+            android:label="@string/app_name"
+            android:logo="@drawable/app_icon_your_company"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".DetailsActivity" />
+        <activity android:name=".PlaybackActivity" />
+        <activity android:name=".BrowseErrorActivity" />
+
+        <!-- You must declare a broadcast receiver which can handle Alexa directives and other Intent messages from the VSK Agent -->
+        <receiver
+            android:name=".receiver.AlexaDirectiveReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="com.amazon.alexa.androidapplicationagent.permission.SEND_DATA">
+            <!-- Intent action for receiving an Alexa directive-->
+            <intent-filter>
+                <action android:name="com.amazon.alexa.vsk_app_agent_api.ACTION_ALEXA_DIRECTIVE" />
+            </intent-filter>
+            <!-- Intent action requested by VSK agent to an app to report its dynamic capabilities-->
+            <intent-filter>
+                <action android:name="com.amazon.alexa.vsk_app_agent_api.ACTION_REPORT_CAPABILITIES" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

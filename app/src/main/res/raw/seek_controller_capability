@@ -1,0 +1,10 @@
+{
+  "type": "AlexaInterface",
+  "interface": "Alexa.SeekController",
+  "version": "3",
+  "configurations": {
+    "operations": [
+      "AdjustSeekPosition"
+    ]
+  }
+}

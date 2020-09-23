@@ -1,0 +1,50 @@
+apply plugin: 'com.android.application'
+
+android {
+
+//    signingConfigs {
+//        firetv {
+//            storeFile file('/Users/yourname/path/to/androidkeys.jks')
+//            storePassword var
+//            keyPassword var
+//            keyAlias = 'yourandroidkeyalias'
+//        }
+//    }
+
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+    defaultConfig {
+        applicationId "com.example.vskfiretv.company"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // signingConfig signingConfigs.firetv
+        }
+        debug {
+            // signingConfig signingConfigs.firetv
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.leanback:leanback:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'com.github.bumptech.glide:glide:3.8.0'
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.navigation:navigation-fragment:2.3.0'
+    implementation 'androidx.navigation:navigation-ui:2.3.0'
+    implementation project(path: ':VSKApplicationAgentClientLibrary')
+}

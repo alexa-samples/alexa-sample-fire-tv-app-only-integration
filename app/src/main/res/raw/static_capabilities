@@ -1,0 +1,26 @@
+{
+  "capabilities": [
+    {
+      "type": "AlexaInterface",
+      "interface": "Alexa.PlaybackController",
+      "version": "3",
+      "supportedOperations" : ["Play", "Pause", "Stop"]
+    },
+    {
+      "type": "AlexaInterface",
+      "interface": "Alexa.RemoteVideoPlayer",
+      "version": "3.1",
+      "configurations": {
+        "operations": [
+          "SearchAndPlay",
+          "SearchAndDisplayResults"
+        ],
+        "catalogs": [
+          {
+            "type": "VIDEO_INGESTION_IDENTIFIER",
+            "sourceId": "ontv"
+          }]
+      }
+    }
+  ]
+}
