@@ -1,0 +1,18 @@
+{
+  "type": "AlexaInterface",
+  "interface": "Alexa.Launcher",
+  "version": "3.1",
+  "configuration": {
+       "catalogs": [],
+       "targets" : [
+          {
+          "name": "play something",
+          "identifier": "uri.for.play.something"
+          },
+          {
+          "name": "play something else",
+          "identifier": "uri.for.play.something.else"
+          }
+       ]
+    }
+}

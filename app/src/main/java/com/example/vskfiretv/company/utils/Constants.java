@@ -7,6 +7,7 @@ public class Constants {
 
     // Alexa Directive Names
     public static final String SEARCH_AND_PLAY = "SearchAndPlay";
+    public static final String LAUNCH_TARGET = "LaunchTarget";
     public static final String SEARCH_AND_DISPLAY_RESULTS = "SearchAndDisplayResults";
     public static final String PAUSE = "pause";
     public static final String PLAY = "play";
@@ -21,6 +22,9 @@ public class Constants {
     public static final String SEND_KEYSTROKE = "SendKeystroke";
     public static final String CURRENT_CAPABILITIES = "CurrentCapabilities";
 
+    // Alexa Directive Versions
+    public static final String DIRECTIVE_VERSION_3_1 = "3.1";
+
     // Default seek time in milli seconds when a video is fast-forwarded
     public static final long DEFAULT_FAST_FORWARD_TIME = 10000;
 
@@ -30,6 +34,7 @@ public class Constants {
     public static final String ENTITIES_JSON_NAME = "entities";
     public static final String VALUE_JSON_NAME = "value";
     public static final String DELTA_POSITION_MILLI_SECONDS_JSON_NAME = "deltaPositionMilliseconds";
+    public static final String IDENTIFIER_JSON_NAME = "identifier";
 
     // Search Intent Extras
     public static final String EXTRA_SEARCH_TEXT = "searchText";
@@ -47,5 +52,9 @@ public class Constants {
     public static final String ACTION_PLAYBACK_REWIND = "com.example.vskfiretv.ACTION_PLAYBACK_REWIND";
     public static final String ACTION_PLAYBACK_STOP = "com.example.vskfiretv.ACTION_PLAYBACK_STOP";
     public static final String ACTION_PLAYBACK_ADJUST_SEEK_POSITION = "com.example.vskfiretv.ACTION_PLAYBACK_ADJUST_SEEK_POSITION";
+
+    // Launch Target URIs
+    public static final String URI_FOR_PLAY_SOMETHING = "uri.for.play.something";
+    public static final String URI_FOR_PLAY_SOMETHING_ELSE = "uri.for.play.something.else";
 
 }

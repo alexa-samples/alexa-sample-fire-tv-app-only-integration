@@ -38,9 +38,12 @@ import static com.example.vskfiretv.company.utils.Constants.ADJUST_SEEK_POSITION
 import static com.example.vskfiretv.company.utils.Constants.CHANGE_CHANNEL;
 import static com.example.vskfiretv.company.utils.Constants.DEFAULT_FAST_FORWARD_TIME;
 import static com.example.vskfiretv.company.utils.Constants.DELTA_POSITION_MILLI_SECONDS_JSON_NAME;
+import static com.example.vskfiretv.company.utils.Constants.DIRECTIVE_VERSION_3_1;
 import static com.example.vskfiretv.company.utils.Constants.ENTITIES_JSON_NAME;
 import static com.example.vskfiretv.company.utils.Constants.EXTRA_PLAYBACK_SEEK_TIME_OFFSET;
 import static com.example.vskfiretv.company.utils.Constants.FAST_FORWARD;
+import static com.example.vskfiretv.company.utils.Constants.IDENTIFIER_JSON_NAME;
+import static com.example.vskfiretv.company.utils.Constants.LAUNCH_TARGET;
 import static com.example.vskfiretv.company.utils.Constants.NEXT;
 import static com.example.vskfiretv.company.utils.Constants.PAUSE;
 import static com.example.vskfiretv.company.utils.Constants.PLAY;
@@ -56,6 +59,8 @@ import static com.example.vskfiretv.company.utils.Constants.START_OVER;
 import static com.example.vskfiretv.company.utils.Constants.STOP;
 import static com.example.vskfiretv.company.utils.Constants.CURRENT_CAPABILITIES;
 import static com.example.vskfiretv.company.utils.Constants.TRANSCRIBED_TEXT_JSON_NAME;
+import static com.example.vskfiretv.company.utils.Constants.URI_FOR_PLAY_SOMETHING;
+import static com.example.vskfiretv.company.utils.Constants.URI_FOR_PLAY_SOMETHING_ELSE;
 import static com.example.vskfiretv.company.utils.Constants.VALUE_JSON_NAME;
 
 /**
@@ -109,6 +114,8 @@ public class AlexaDirectiveReceiver extends BroadcastReceiver {
                     handleChangeChannel();
                 } else if (SEND_KEYSTROKE.equals(directiveName)) {
                     handleSendKeystroke();
+                } else if(LAUNCH_TARGET.equals(directiveName) && DIRECTIVE_VERSION_3_1.equals(directivePayloadVersion)) {
+                    handleLaunchTarget(directivePayload);
                 } else if(CURRENT_CAPABILITIES.equals(directiveName)) {
                     handleTestDirective();
                 } else {
@@ -138,6 +145,31 @@ public class AlexaDirectiveReceiver extends BroadcastReceiver {
         Log.i(TAG, "Finished handling Intent from the VSK Agent");
     }
 
+    private void handleLaunchTarget(final String directivePayload) {
+        Log.i(TAG, "Handling LaunchTarget directive...");
+        String shortcutId = getShortcutIdFromDirectivePayload(directivePayload);
+        if (URI_FOR_PLAY_SOMETHING.equals(shortcutId) || URI_FOR_PLAY_SOMETHING_ELSE.equals(shortcutId)) {
+            List<Movie> moviesList = MovieList.getList();
+            Random rand = new Random();
+            playMovie(moviesList.get(rand.nextInt(moviesList.size())));
+        }
+        Log.i(TAG, "Handling LaunchTarget directive finished");
+    }
+
+    private String getShortcutIdFromDirectivePayload(final String launchTargetPayload) {
+        try {
+            final JsonParser jsonParser = new JsonParser();
+            final JsonElement launchTargetPayloadJsonTree = jsonParser.parse(launchTargetPayload);
+            if (launchTargetPayloadJsonTree.isJsonObject()) {
+                final JsonObject launchTargetJsonObject = launchTargetPayloadJsonTree.getAsJsonObject();
+                return launchTargetJsonObject.get(IDENTIFIER_JSON_NAME).getAsString();
+            }
+        } catch (final Exception ex) {
+            Log.e(TAG, "Error processing LaunchTarget directive", ex);
+        }
+        return null;
+    }
+
     private void sendPendingIntentResponse(final Context context, final Intent intent, final boolean directiveExecutionStatus) {
         final PendingIntent pendingIntent = intent.getParcelableExtra(VSKIntentConstants.EXTRA_DIRECTIVE_RESPONSE_PENDING_INTENT);
         if(pendingIntent != null) {
@@ -154,8 +186,14 @@ public class AlexaDirectiveReceiver extends BroadcastReceiver {
         Log.i(TAG, "Handling SearchAndPlay directive...");
 
         final Movie movieToBePlayed = getMovieFromDirectivePayload(directivePayload);
+        playMovie(movieToBePlayed);
+
+        Log.i(TAG, "Handling SearchAndPlay directive finished");
+    }
+
+    private void playMovie(Movie movieToBePlayed) {
         final String movieName = movieToBePlayed.getTitle();
-        Log.d(TAG, "Playing some random Movie " + movieName);
+        Log.d(TAG, "Playing Movie " + movieName);
 
         final Intent playIntent = new Intent();
         final String packageName = VSKReferenceApplication.getInstance().getPackageName();
@@ -165,8 +203,6 @@ public class AlexaDirectiveReceiver extends BroadcastReceiver {
         // PlaybackActivity expects a movie to be currently selected, set this now in case there wasn't one
         playIntent.putExtra(DetailsActivity.MOVIE, movieToBePlayed);
         VSKReferenceApplication.getInstance().startActivity(playIntent);
-
-        Log.i(TAG, "Handling SearchAndPlay directive finished");
     }
 
     private Movie getMovieFromDirectivePayload(final String searchAndPlayPayload) {

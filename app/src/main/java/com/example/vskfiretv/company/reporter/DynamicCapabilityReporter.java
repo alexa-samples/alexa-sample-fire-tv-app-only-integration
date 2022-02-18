@@ -37,6 +37,7 @@ public class DynamicCapabilityReporter {
         supportedCapabilities.add(getAlexaCapability(R.raw.channel_controller_capability)); // ChannelController Capability
         supportedCapabilities.add(getAlexaCapability(R.raw.seek_controller_capability)); // SeekController Capability
         supportedCapabilities.add(getAlexaCapability(R.raw.keypad_controller_capability)); // KeypadController Capability
+        supportedCapabilities.add(getAlexaCapability(R.raw.alexa_launcher_capability)); // Alexa.Launcher Capability
 
         // Make the capability reporting request
         final AddOrUpdateCapabilitiesRequest request = new AddOrUpdateCapabilitiesRequest(supportedCapabilities);
